@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html { @apply scroll-smooth; }
+    body { @apply font-body text-kinder-brown-800 bg-white antialiased; }
+    h1, h2, h3, h4, h5, h6 { @apply font-display; }
+    ::selection { @apply bg-kinder-200 text-kinder-900; }
+}
+
+@layer components {
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2
+               px-7 py-3.5 bg-kinder-500 text-white
+               font-display font-semibold text-sm rounded-2xl
+               shadow-soft hover:shadow-glow hover:bg-kinder-600
+               active:scale-[0.97] transition-all duration-300
+               focus:outline-none focus:ring-2 focus:ring-kinder-400/50 focus:ring-offset-2;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2
+               px-7 py-3.5 bg-white text-kinder-brown-800
+               font-display font-semibold text-sm
+               border-2 border-kinder-brown-200 rounded-2xl
+               hover:border-kinder-500 hover:text-kinder-600
+               active:scale-[0.97] transition-all duration-300;
+    }
+
+    .btn-accent {
+        @apply inline-flex items-center justify-center gap-2
+               px-7 py-3.5 bg-candy-mint text-white
+               font-display font-bold text-sm rounded-2xl
+               shadow-soft hover:shadow-glow-mint hover:bg-teal-500
+               active:scale-[0.97] transition-all duration-300;
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center gap-2
+               px-5 py-2.5 text-kinder-brown-600 font-semibold text-sm rounded-xl
+               hover:bg-kinder-brown-100 hover:text-kinder-brown-800
+               active:scale-[0.97] transition-all duration-200;
+    }
+
+    .btn-cart {
+        @apply inline-flex items-center justify-center gap-1.5
+               w-full px-4 py-3 bg-kinder-500 text-white
+               font-display font-semibold text-xs rounded-xl
+               opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
+               hover:bg-kinder-600 hover:shadow-glow
+               active:scale-[0.97] transition-all duration-300;
+    }
+
+    .btn-wishlist {
+        @apply inline-flex items-center justify-center
+               w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm
+               text-kinder-brown-400 shadow-soft
+               opacity-0 group-hover:opacity-100
+               hover:bg-white hover:text-kinder-500 hover:shadow-soft-md hover:scale-110
+               active:scale-90 transition-all duration-300;
+    }
+    .btn-wishlist.active { @apply bg-kinder-50 text-kinder-500 opacity-100; }
+
+    /* ── Cards ───────────────────────────────────────── */
+    .card-product {
+        @apply relative bg-white rounded-3xl
+               border border-kinder-brown-200/50 overflow-hidden shadow-soft
+               hover:shadow-soft-xl hover:-translate-y-2
+               transition-all duration-500 ease-out;
+    }
+
+    /* ── Badges ──────────────────────────────────────── */
+    .badge-sale {
+        @apply inline-flex items-center px-2.5 py-1
+               bg-candy-orange text-white text-2xs font-bold font-display
+               rounded-full tracking-wide;
+    }
+    .badge-new {
+        @apply inline-flex items-center px-2.5 py-1
+               bg-candy-mint text-white text-2xs font-bold font-display
+               rounded-full uppercase tracking-wide;
+    }
+    .badge-hot {
+        @apply inline-flex items-center px-2.5 py-1
+               bg-kinder-500 text-white text-2xs font-bold font-display
+               rounded-full uppercase tracking-wide;
+    }
+
+    /* ── Form Inputs ─────────────────────────────────── */
+    .input-field {
+        @apply w-full px-5 py-3.5 bg-white text-kinder-brown-800
+               border border-kinder-brown-200 rounded-2xl
+               placeholder:text-kinder-brown-400
+               focus:bg-white focus:border-kinder-500 focus:ring-4 focus:ring-kinder-500/10
+               focus:outline-none transition-all duration-300;
+    }
+
+    /* ── Navigation ──────────────────────────────────── */
+    .nav-link {
+        @apply relative inline-flex items-center gap-1.5
+               px-4 py-2.5 text-kinder-brown-600 font-semibold text-sm rounded-xl
+               hover:text-kinder-600 hover:bg-kinder-50
+               transition-all duration-200;
+    }
+    .nav-link.active { @apply text-kinder-600 bg-kinder-50; }
+
+    /* ── Typography ──────────────────────────────────── */
+    .section-title {
+        @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold text-kinder-brown-800 tracking-tight;
+    }
+    .price-old { @apply text-sm text-kinder-brown-400 line-through; }
+    .price-current { @apply text-lg font-display font-bold text-kinder-brown-800; }
+    .price-sale { @apply text-lg font-display font-bold text-kinder-500; }
+
+    /* ── Admin ───────────────────────────────────────── */
+    .admin-sidebar-link {
+        @apply flex items-center gap-3 px-4 py-2.5
+               text-kinder-brown-600 font-semibold text-sm rounded-xl
+               hover:bg-kinder-50 hover:text-kinder-600 transition-all duration-200;
+    }
+    .admin-sidebar-link.active { @apply bg-kinder-100 text-kinder-700; }
+    .admin-card { @apply bg-white rounded-2xl shadow-soft border border-kinder-brown-200/60 p-6; }
+    .admin-table { @apply w-full text-sm text-left; }
+    .admin-table thead { @apply bg-kinder-brown-50 border-b border-kinder-brown-200; }
+    .admin-table thead th { @apply px-4 py-3 font-display font-semibold text-kinder-brown-600 uppercase text-xs tracking-wider; }
+    .admin-table tbody tr { @apply border-b border-kinder-brown-100 hover:bg-kinder-50/50 transition-colors; }
+    .admin-table tbody td { @apply px-4 py-3; }
+}
+
+@layer utilities {
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .text-balance { text-wrap: balance; }
+    .slider-mask {
+        mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    }
+}
+
+/* Scroll Animations */
+.animate-on-scroll {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.stagger-children .animate-on-scroll:nth-child(1) { transition-delay: 0ms; }
+.stagger-children .animate-on-scroll:nth-child(2) { transition-delay: 80ms; }
+.stagger-children .animate-on-scroll:nth-child(3) { transition-delay: 160ms; }
+.stagger-children .animate-on-scroll:nth-child(4) { transition-delay: 240ms; }
+.stagger-children .animate-on-scroll:nth-child(5) { transition-delay: 320ms; }
+.stagger-children .animate-on-scroll:nth-child(6) { transition-delay: 400ms; }
+.stagger-children .animate-on-scroll:nth-child(7) { transition-delay: 480ms; }
+.stagger-children .animate-on-scroll:nth-child(8) { transition-delay: 560ms; }
