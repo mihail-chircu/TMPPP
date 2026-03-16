@@ -1,0 +1,306 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <!-- Sky / Background gradient -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fdf2f8"/>
+      <stop offset="100%" stop-color="#fce7f3"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#86efac"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <linearGradient id="balloon1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="balloon2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="balloon3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#sky)"/>
+
+  <!-- Clouds -->
+  <g opacity="0.6">
+    <ellipse cx="120" cy="80" rx="60" ry="25" fill="white"/>
+    <ellipse cx="90" cy="75" rx="40" ry="20" fill="white"/>
+    <ellipse cx="155" cy="78" rx="35" ry="18" fill="white"/>
+  </g>
+  <g opacity="0.4">
+    <ellipse cx="620" cy="60" rx="55" ry="22" fill="white"/>
+    <ellipse cx="590" cy="55" rx="35" ry="18" fill="white"/>
+    <ellipse cx="660" cy="58" rx="30" ry="15" fill="white"/>
+  </g>
+  <g opacity="0.5">
+    <ellipse cx="380" cy="45" rx="50" ry="20" fill="white"/>
+    <ellipse cx="350" cy="40" rx="30" ry="16" fill="white"/>
+    <ellipse cx="415" cy="42" rx="28" ry="14" fill="white"/>
+  </g>
+
+  <!-- Sun -->
+  <circle cx="700" cy="80" r="45" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="700" cy="80" r="35" fill="#fcd34d"/>
+  <!-- Sun rays -->
+  <g stroke="#fbbf24" stroke-width="3" opacity="0.4">
+    <line x1="700" y1="20" x2="700" y2="8"/>
+    <line x1="745" y1="35" x2="755" y2="25"/>
+    <line x1="760" y1="80" x2="772" y2="80"/>
+    <line x1="745" y1="125" x2="755" y2="135"/>
+    <line x1="655" y1="35" x2="645" y2="25"/>
+    <line x1="640" y1="80" x2="628" y2="80"/>
+    <line x1="655" y1="125" x2="645" y2="135"/>
+  </g>
+
+  <!-- Grassy hill -->
+  <ellipse cx="400" cy="600" rx="500" ry="200" fill="url(#grass)"/>
+  <ellipse cx="400" cy="590" rx="500" ry="190" fill="#86efac"/>
+
+  <!-- Flowers on grass -->
+  <g>
+    <!-- Flower 1 -->
+    <line x1="100" y1="430" x2="100" y2="460" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="100" cy="425" r="6" fill="#f472b6"/>
+    <circle cx="100" cy="425" r="2.5" fill="#fcd34d"/>
+    <!-- Flower 2 -->
+    <line x1="200" y1="445" x2="200" y2="475" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="200" cy="440" r="5" fill="#c084fc"/>
+    <circle cx="200" cy="440" r="2" fill="#fcd34d"/>
+    <!-- Flower 3 -->
+    <line x1="650" y1="435" x2="650" y2="465" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="650" cy="430" r="6" fill="#fb923c"/>
+    <circle cx="650" cy="430" r="2.5" fill="#fcd34d"/>
+    <!-- Flower 4 -->
+    <line x1="720" y1="450" x2="720" y2="480" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="720" cy="445" r="5" fill="#ec4899"/>
+    <circle cx="720" cy="445" r="2" fill="white"/>
+    <!-- Flower 5 -->
+    <line x1="50" y1="460" x2="50" y2="490" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="50" cy="455" r="5" fill="#06b6d4"/>
+    <circle cx="50" cy="455" r="2" fill="#fcd34d"/>
+  </g>
+
+  <!-- === CHILD 1: Girl with teddy bear (left) === -->
+  <g transform="translate(150, 310)">
+    <!-- Legs -->
+    <rect x="15" y="95" width="14" height="35" rx="7" fill="#fde68a"/>
+    <rect x="41" y="95" width="14" height="35" rx="7" fill="#fde68a"/>
+    <!-- Shoes -->
+    <ellipse cx="22" cy="132" rx="10" ry="6" fill="#ec4899"/>
+    <ellipse cx="48" cy="132" rx="10" ry="6" fill="#ec4899"/>
+    <!-- Body / Dress -->
+    <path d="M15 50 C15 40, 55 40, 55 50 L60 100 C60 105, 10 105, 10 100 Z" fill="#f472b6"/>
+    <!-- Dress pattern -->
+    <circle cx="25" cy="70" r="3" fill="#fdf2f8" opacity="0.5"/>
+    <circle cx="45" cy="75" r="3" fill="#fdf2f8" opacity="0.5"/>
+    <circle cx="35" cy="85" r="3" fill="#fdf2f8" opacity="0.5"/>
+    <!-- Arms -->
+    <path d="M15 55 Q-5 75, 5 90" stroke="#fcd9b1" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M55 55 Q75 75, 65 90" stroke="#fcd9b1" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- Head -->
+    <circle cx="35" cy="32" r="24" fill="#fcd9b1"/>
+    <!-- Hair -->
+    <path d="M11 28 C11 8, 59 8, 59 28 C59 18, 62 22, 60 32 L58 28 C56 14, 14 14, 12 28 L11 32 C8 22, 11 18, 11 28Z" fill="#92400e"/>
+    <!-- Pigtails -->
+    <circle cx="8" cy="30" r="8" fill="#92400e"/>
+    <circle cx="62" cy="30" r="8" fill="#92400e"/>
+    <!-- Hair bows -->
+    <path d="M4 22 L8 26 L12 22 L8 18Z" fill="#ec4899"/>
+    <path d="M58 22 L62 26 L66 22 L62 18Z" fill="#ec4899"/>
+    <!-- Face -->
+    <circle cx="27" cy="30" r="3" fill="#5e453d"/>
+    <circle cx="43" cy="30" r="3" fill="#5e453d"/>
+    <circle cx="28" cy="31" r="1" fill="white"/>
+    <circle cx="44" cy="31" r="1" fill="white"/>
+    <!-- Smile -->
+    <path d="M28 40 Q35 47 42 40" stroke="#d97706" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Blush -->
+    <ellipse cx="22" cy="38" rx="5" ry="3" fill="#fca5a5" opacity="0.4"/>
+    <ellipse cx="48" cy="38" rx="5" ry="3" fill="#fca5a5" opacity="0.4"/>
+
+    <!-- Teddy Bear in hand -->
+    <g transform="translate(-15, 70)">
+      <ellipse cx="15" cy="18" rx="12" ry="15" fill="#d4a574"/>
+      <circle cx="15" cy="6" r="9" fill="#c4956a"/>
+      <!-- Ears -->
+      <circle cx="7" cy="0" r="5" fill="#c4956a"/>
+      <circle cx="23" cy="0" r="5" fill="#c4956a"/>
+      <circle cx="7" cy="0" r="3" fill="#e8c4a0"/>
+      <circle cx="23" cy="0" r="3" fill="#e8c4a0"/>
+      <!-- Face -->
+      <circle cx="11" cy="5" r="1.5" fill="#5e453d"/>
+      <circle cx="19" cy="5" r="1.5" fill="#5e453d"/>
+      <ellipse cx="15" cy="9" rx="3" ry="2" fill="#a87550"/>
+      <!-- Bow tie -->
+      <path d="M11 14 L15 16 L19 14 L15 18Z" fill="#ec4899"/>
+    </g>
+  </g>
+
+  <!-- === CHILD 2: Boy with toy blocks (center) === -->
+  <g transform="translate(350, 320)">
+    <!-- Legs -->
+    <rect x="18" y="90" width="14" height="35" rx="7" fill="#67e8f9"/>
+    <rect x="44" y="90" width="14" height="35" rx="7" fill="#67e8f9"/>
+    <!-- Shoes -->
+    <ellipse cx="25" cy="127" rx="10" ry="6" fill="#3b82f6"/>
+    <ellipse cx="51" cy="127" rx="10" ry="6" fill="#3b82f6"/>
+    <!-- Body / T-shirt -->
+    <path d="M18 48 C18 38, 58 38, 58 48 L60 95 C60 100, 16 100, 16 95 Z" fill="#06b6d4"/>
+    <!-- Shirt stripe -->
+    <rect x="18" y="60" width="40" height="6" rx="3" fill="#0891b2"/>
+    <!-- Arms -->
+    <path d="M18 52 Q-2 70, 10 88" stroke="#fcd9b1" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M58 52 Q78 70, 68 88" stroke="#fcd9b1" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- Head -->
+    <circle cx="38" cy="28" r="24" fill="#fcd9b1"/>
+    <!-- Hair -->
+    <path d="M14 24 C14 6, 62 6, 62 24 C62 14, 64 10, 60 18 L14 18 C10 10, 14 14, 14 24Z" fill="#451a03"/>
+    <!-- Spiky hair detail -->
+    <path d="M20 14 L24 4 L28 14 M32 12 L36 2 L40 12 M44 14 L48 4 L52 14" stroke="#451a03" stroke-width="3" fill="#451a03"/>
+    <!-- Face -->
+    <circle cx="30" cy="26" r="3" fill="#5e453d"/>
+    <circle cx="46" cy="26" r="3" fill="#5e453d"/>
+    <circle cx="31" cy="27" r="1" fill="white"/>
+    <circle cx="47" cy="27" r="1" fill="white"/>
+    <!-- Big smile -->
+    <path d="M30 36 Q38 44 46 36" stroke="#d97706" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- Blush -->
+    <ellipse cx="24" cy="34" rx="5" ry="3" fill="#fca5a5" opacity="0.4"/>
+    <ellipse cx="52" cy="34" rx="5" ry="3" fill="#fca5a5" opacity="0.4"/>
+
+    <!-- Toy Blocks on ground -->
+    <g transform="translate(5, 100)">
+      <rect x="0" y="10" width="25" height="25" rx="3" fill="#f472b6"/>
+      <text x="12.5" y="28" text-anchor="middle" font-family="Fredoka" font-size="14" fill="white" font-weight="600">A</text>
+      <rect x="28" y="10" width="25" height="25" rx="3" fill="#8b5cf6"/>
+      <text x="40.5" y="28" text-anchor="middle" font-family="Fredoka" font-size="14" fill="white" font-weight="600">B</text>
+      <rect x="14" y="-12" width="25" height="25" rx="3" fill="#06b6d4"/>
+      <text x="26.5" y="6" text-anchor="middle" font-family="Fredoka" font-size="14" fill="white" font-weight="600">C</text>
+    </g>
+  </g>
+
+  <!-- === CHILD 3: Girl with toy car (right) === -->
+  <g transform="translate(560, 315)">
+    <!-- Legs -->
+    <rect x="15" y="90" width="14" height="35" rx="7" fill="#fde68a"/>
+    <rect x="41" y="90" width="14" height="35" rx="7" fill="#fde68a"/>
+    <!-- Shoes -->
+    <ellipse cx="22" cy="127" rx="10" ry="6" fill="#8b5cf6"/>
+    <ellipse cx="48" cy="127" rx="10" ry="6" fill="#8b5cf6"/>
+    <!-- Body / Overalls -->
+    <path d="M15 48 C15 38, 55 38, 55 48 L58 95 C58 100, 12 100, 12 95 Z" fill="#fbbf24"/>
+    <!-- Pocket -->
+    <rect x="26" y="65" width="18" height="14" rx="4" fill="#f59e0b"/>
+    <!-- Arms reaching down -->
+    <path d="M15 52 Q-5 75, 8 95" stroke="#fcd9b1" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M55 52 Q75 75, 62 95" stroke="#fcd9b1" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- Head -->
+    <circle cx="35" cy="28" r="24" fill="#fcd9b1"/>
+    <!-- Hair - long -->
+    <path d="M11 24 C11 4, 59 4, 59 24 C59 14, 62 30, 58 40 C56 20, 14 20, 12 40 C8 30, 11 14, 11 24Z" fill="#b45309"/>
+    <!-- Side hair -->
+    <ellipse cx="10" cy="35" rx="6" ry="15" fill="#b45309"/>
+    <ellipse cx="60" cy="35" rx="6" ry="15" fill="#b45309"/>
+    <!-- Headband -->
+    <path d="M12 20 Q35 12, 58 20" stroke="#ec4899" stroke-width="4" fill="none"/>
+    <!-- Headband bow -->
+    <circle cx="50" cy="16" r="5" fill="#ec4899"/>
+    <!-- Face -->
+    <circle cx="27" cy="26" r="3" fill="#5e453d"/>
+    <circle cx="43" cy="26" r="3" fill="#5e453d"/>
+    <circle cx="28" cy="27" r="1" fill="white"/>
+    <circle cx="44" cy="27" r="1" fill="white"/>
+    <!-- Smile -->
+    <path d="M28 36 Q35 42 42 36" stroke="#d97706" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Blush -->
+    <ellipse cx="22" cy="34" rx="5" ry="3" fill="#fca5a5" opacity="0.4"/>
+    <ellipse cx="48" cy="34" rx="5" ry="3" fill="#fca5a5" opacity="0.4"/>
+
+    <!-- Toy car -->
+    <g transform="translate(-5, 110)">
+      <rect x="5" y="5" width="45" height="18" rx="8" fill="#ef4444"/>
+      <rect x="10" y="0" width="25" height="14" rx="5" fill="#fca5a5"/>
+      <!-- Windows -->
+      <rect x="14" y="3" width="8" height="7" rx="2" fill="#bfdbfe"/>
+      <rect x="24" y="3" width="8" height="7" rx="2" fill="#bfdbfe"/>
+      <!-- Wheels -->
+      <circle cx="15" cy="25" r="6" fill="#374151"/>
+      <circle cx="15" cy="25" r="3" fill="#6b7280"/>
+      <circle cx="40" cy="25" r="6" fill="#374151"/>
+      <circle cx="40" cy="25" r="3" fill="#6b7280"/>
+      <!-- Headlight -->
+      <circle cx="50" cy="14" r="3" fill="#fcd34d"/>
+    </g>
+  </g>
+
+  <!-- Balloons (floating) -->
+  <g>
+    <!-- Balloon 1 - Pink -->
+    <line x1="240" y1="280" x2="250" y2="140" stroke="#d4d4d4" stroke-width="1.5"/>
+    <ellipse cx="250" cy="110" rx="28" ry="35" fill="url(#balloon1)"/>
+    <ellipse cx="243" cy="100" rx="8" ry="12" fill="white" opacity="0.25"/>
+    <path d="M246 144 L250 148 L254 144" fill="#ec4899"/>
+
+    <!-- Balloon 2 - Purple -->
+    <line x1="260" y1="280" x2="285" y2="100" stroke="#d4d4d4" stroke-width="1.5"/>
+    <ellipse cx="285" cy="70" rx="25" ry="32" fill="url(#balloon2)"/>
+    <ellipse cx="279" cy="62" rx="7" ry="10" fill="white" opacity="0.25"/>
+    <path d="M281 101 L285 105 L289 101" fill="#8b5cf6"/>
+
+    <!-- Balloon 3 - Cyan -->
+    <line x1="255" y1="280" x2="220" y2="120" stroke="#d4d4d4" stroke-width="1.5"/>
+    <ellipse cx="220" cy="88" rx="26" ry="34" fill="url(#balloon3)"/>
+    <ellipse cx="214" cy="78" rx="7" ry="11" fill="white" opacity="0.25"/>
+    <path d="M216 121 L220 125 L224 121" fill="#06b6d4"/>
+  </g>
+
+  <!-- Kite in the sky -->
+  <g transform="translate(500, 50)">
+    <path d="M0 30 L20 0 L40 30 L20 55 Z" fill="#f97316" opacity="0.9"/>
+    <path d="M0 30 L20 0 L20 55Z" fill="#fb923c"/>
+    <line x1="20" y1="0" x2="20" y2="55" stroke="white" stroke-width="1" opacity="0.5"/>
+    <line x1="0" y1="30" x2="40" y2="30" stroke="white" stroke-width="1" opacity="0.5"/>
+    <!-- Kite tail -->
+    <path d="M20 55 Q30 75 15 90 Q25 105 18 120" stroke="#ec4899" stroke-width="2" fill="none"/>
+    <circle cx="15" cy="90" r="3" fill="#8b5cf6"/>
+    <circle cx="18" cy="120" r="3" fill="#06b6d4"/>
+  </g>
+
+  <!-- Stars / Sparkles -->
+  <g fill="#fbbf24" opacity="0.6">
+    <path d="M60 150 L63 158 L70 158 L64 163 L66 170 L60 166 L54 170 L56 163 L50 158 L57 158Z" transform="scale(0.5)"/>
+    <path d="M700 200 L703 208 L710 208 L704 213 L706 220 L700 216 L694 220 L696 213 L690 208 L697 208Z" transform="scale(0.6)"/>
+    <path d="M450 100 L452 106 L458 106 L453 110 L455 116 L450 112 L445 116 L447 110 L442 106 L448 106Z" transform="scale(0.5)"/>
+  </g>
+
+  <!-- Butterflies -->
+  <g transform="translate(480, 280)" opacity="0.7">
+    <path d="M0 5 Q-10 -5 -5 -10 Q0 -5 0 5" fill="#f472b6"/>
+    <path d="M0 5 Q10 -5 5 -10 Q0 -5 0 5" fill="#f9a8d4"/>
+    <path d="M0 5 Q-8 10 -4 15 Q0 10 0 5" fill="#f472b6"/>
+    <path d="M0 5 Q8 10 4 15 Q0 10 0 5" fill="#f9a8d4"/>
+    <line x1="0" y1="3" x2="0" y2="8" stroke="#5e453d" stroke-width="0.8"/>
+  </g>
+  <g transform="translate(150, 200)" opacity="0.5">
+    <path d="M0 4 Q-8 -4 -4 -8 Q0 -4 0 4" fill="#a78bfa"/>
+    <path d="M0 4 Q8 -4 4 -8 Q0 -4 0 4" fill="#c4b5fd"/>
+    <path d="M0 4 Q-6 8 -3 12 Q0 8 0 4" fill="#a78bfa"/>
+    <path d="M0 4 Q6 8 3 12 Q0 8 0 4" fill="#c4b5fd"/>
+    <line x1="0" y1="2" x2="0" y2="7" stroke="#5e453d" stroke-width="0.6"/>
+  </g>
+
+  <!-- Rainbow arc (subtle) -->
+  <g opacity="0.15">
+    <path d="M-50 400 Q400 -50 850 400" stroke="#ef4444" stroke-width="8" fill="none"/>
+    <path d="M-50 408 Q400 -42 850 408" stroke="#f97316" stroke-width="8" fill="none"/>
+    <path d="M-50 416 Q400 -34 850 416" stroke="#fbbf24" stroke-width="8" fill="none"/>
+    <path d="M-50 424 Q400 -26 850 424" stroke="#4ade80" stroke-width="8" fill="none"/>
+    <path d="M-50 432 Q400 -18 850 432" stroke="#60a5fa" stroke-width="8" fill="none"/>
+    <path d="M-50 440 Q400 -10 850 440" stroke="#a78bfa" stroke-width="8" fill="none"/>
+  </g>
+</svg>
