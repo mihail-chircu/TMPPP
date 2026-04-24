@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Services\Checkout\CheckoutFacade;
 use App\Services\Payment\PaymentService;
+use App\Services\Shipping\ShippingQuote;
 use App\Services\Shipping\ShippingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -37,7 +38,19 @@ class CheckoutController extends Controller
 
         // Factory Method Pattern: get shipping methods with calculated costs
         $subtotal = $cart->items->sum(fn ($item) => $item->price * $item->quantity);
-        $shippingMethods = $this->shippingService->getAvailableMethods($subtotal);
+        $itemCount = $cart->items->sum('quantity');
+
+        $defaultCity = $request->input('shipping_city')
+            ?? Auth::user()?->city
+            ?? 'Chișinău';
+
+        $quote = new ShippingQuote(
+            orderTotal: (float) $subtotal,
+            itemCount: (int) $itemCount,
+            destinationCity: $defaultCity,
+        );
+
+        $shippingMethods = $this->shippingService->getAvailableMethods($quote);
 
         return view('frontend.checkout.index', compact('cart', 'paymentMethods', 'shippingMethods'));
     }

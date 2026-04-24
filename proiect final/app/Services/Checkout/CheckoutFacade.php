@@ -5,8 +5,10 @@ namespace App\Services\Checkout;
 use App\Events\OrderPlaced;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Services\Cart\CartCommandInvoker;
 use App\Services\Order\OrderBuilder;
 use App\Services\Payment\PaymentService;
+use App\Services\Shipping\ShippingQuote;
 use App\Services\Shipping\ShippingService;
 use App\Services\Validation\OrderValidationPipeline;
 use App\Services\Validation\ValidationResult;
@@ -28,6 +30,7 @@ class CheckoutFacade
         private PaymentService $paymentService,
         private ShippingService $shippingService,
         private OrderValidationPipeline $validationPipeline,
+        private CartCommandInvoker $cartInvoker,
     ) {}
 
     /**
@@ -50,11 +53,19 @@ class CheckoutFacade
             return ['success' => false, 'error' => $validation->message];
         }
 
-        // Factory Method: calculate shipping cost
+        // Factory Method: calculate shipping cost based on a rich quote
+        // (order total, item count, destination city).
         $subtotal = $cart->items->sum(fn ($item) => $item->price * $item->quantity);
+        $itemCount = $cart->items->sum('quantity');
+        $quote = new ShippingQuote(
+            orderTotal: (float) $subtotal,
+            itemCount: (int) $itemCount,
+            destinationCity: $data['shipping_city'],
+        );
+
         $shippingCost = $this->shippingService->calculateCost(
             $data['shipping_method'] ?? 'standard',
-            $subtotal,
+            $quote,
         );
 
         // Builder Pattern: construct the order step by step
@@ -77,9 +88,11 @@ class CheckoutFacade
             ->withCartItems($cart->items)
             ->build();
 
-        // Clear cart
+        // Clear cart and the Command Pattern undo history — the
+        // persisted commands reference cart rows that no longer exist.
         $cart->items()->delete();
         $cart->delete();
+        $this->cartInvoker->clearHistory();
 
         // Adapter Pattern: process payment
         $this->paymentService->process($order, $data['payment_method']);

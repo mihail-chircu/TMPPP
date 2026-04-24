@@ -6,7 +6,13 @@ use App\Models\Order;
 use App\Services\Payment\PaymentProcessorInterface;
 
 /**
- * Adapter: wraps cash-on-delivery logic into the unified interface.
+ * Concrete implementation of PaymentProcessorInterface.
+ *
+ * Unlike CardPaymentAdapter and BankTransferAdapter, this one does
+ * not wrap a foreign gateway — cash-on-delivery is purely an internal
+ * operation (the courier collects the money). It exists in the
+ * adapter family so the PaymentService can treat every method
+ * uniformly.
  */
 class CashOnDeliveryAdapter implements PaymentProcessorInterface
 {

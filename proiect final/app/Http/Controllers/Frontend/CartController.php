@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Product;
 use App\Services\Cart\CartCommandInvoker;
 use App\Services\Cart\Commands\AddToCartCommand;
 use App\Services\Cart\Commands\RemoveFromCartCommand;
 use App\Services\Cart\Commands\UpdateQuantityCommand;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -31,7 +31,10 @@ class CartController extends Controller
             $cart->load(['items.product.primaryImage', 'items.product.activeDiscount']);
         }
 
-        return view('frontend.cart.index', compact('cart'));
+        $canUndo = $this->invoker->canUndo();
+        $history = $this->invoker->getHistory();
+
+        return view('frontend.cart.index', compact('cart', 'canUndo', 'history'));
     }
 
     /**
@@ -47,7 +50,6 @@ class CartController extends Controller
         $this->getOrCreateCart($request);
 
         $command = new AddToCartCommand(
-            $this->cartService,
             $validated['product_id'],
             $validated['quantity'],
         );
@@ -72,7 +74,7 @@ class CartController extends Controller
             'quantity' => ['required', 'integer', 'min:1', 'max:99'],
         ]);
 
-        $command = new UpdateQuantityCommand($item, $validated['quantity']);
+        $command = new UpdateQuantityCommand($item->id, $validated['quantity']);
         $this->invoker->execute($command);
 
         $cart = $item->cart;
@@ -92,7 +94,7 @@ class CartController extends Controller
     {
         $cart = $item->cart;
 
-        $command = new RemoveFromCartCommand($this->cartService, $item);
+        $command = new RemoveFromCartCommand($item->id);
         $this->invoker->execute($command);
 
         return response()->json([
@@ -100,6 +102,22 @@ class CartController extends Controller
             'cart_count' => $cart->items()->sum('quantity'),
             'cart_total' => number_format($cart->items()->get()->sum(fn (CartItem $i) => $i->price * $i->quantity), 2),
         ]);
+    }
+
+    /**
+     * Command Pattern: undo the last operation via the invoker.
+     */
+    public function undo(Request $request): RedirectResponse
+    {
+        $description = $this->invoker->undoLast();
+
+        if (! $description) {
+            return redirect()->route('cart.index')
+                ->with('info', 'Nu există operații de anulat.');
+        }
+
+        return redirect()->route('cart.index')
+            ->with('success', "Operație anulată: {$description}");
     }
 
     protected function getCart(Request $request): ?Cart

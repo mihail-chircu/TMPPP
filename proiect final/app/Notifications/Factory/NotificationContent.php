@@ -3,9 +3,13 @@
 namespace App\Notifications\Factory;
 
 /**
- * Value object holding notification content produced by factories.
+ * Abstract Factory Pattern — Abstract Product.
+ *
+ * Common base for all notification products. Concrete notification
+ * classes (confirmation, status update, shipping) extend this and
+ * add their own fields.
  */
-class NotificationContent
+abstract class NotificationContent
 {
     public function __construct(
         public readonly string $subject,

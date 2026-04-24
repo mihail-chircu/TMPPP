@@ -4,12 +4,20 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Notifications\Factory\NotificationContent;
+use App\Notifications\Factory\OrderConfirmationNotification;
 use App\Notifications\Factory\OrderNotificationFactory;
+use App\Notifications\Factory\ShippingNotification;
+use App\Notifications\Factory\StatusUpdateNotification;
 use Illuminate\Support\Facades\Log;
 
 /**
  * Uses the Abstract Factory to send order notifications
  * through whatever channel the injected factory produces.
+ *
+ * The client is coupled to the abstract products
+ * (OrderConfirmationNotification, StatusUpdateNotification,
+ * ShippingNotification) and to the abstract factory, never to
+ * a specific channel.
  */
 class OrderNotificationService
 {
@@ -17,7 +25,7 @@ class OrderNotificationService
         private OrderNotificationFactory $factory,
     ) {}
 
-    public function notifyOrderConfirmation(Order $order): NotificationContent
+    public function notifyOrderConfirmation(Order $order): OrderConfirmationNotification
     {
         $notification = $this->factory->createOrderConfirmation($order);
         $this->dispatch($notification, $order);
@@ -25,7 +33,7 @@ class OrderNotificationService
         return $notification;
     }
 
-    public function notifyStatusUpdate(Order $order, string $newStatus): NotificationContent
+    public function notifyStatusUpdate(Order $order, string $newStatus): StatusUpdateNotification
     {
         $notification = $this->factory->createStatusUpdate($order, $newStatus);
         $this->dispatch($notification, $order);
@@ -34,6 +42,14 @@ class OrderNotificationService
             $shipping = $this->factory->createShippingNotification($order);
             $this->dispatch($shipping, $order);
         }
+
+        return $notification;
+    }
+
+    public function notifyShipping(Order $order): ShippingNotification
+    {
+        $notification = $this->factory->createShippingNotification($order);
+        $this->dispatch($notification, $order);
 
         return $notification;
     }

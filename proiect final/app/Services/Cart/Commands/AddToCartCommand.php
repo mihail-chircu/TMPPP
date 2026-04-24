@@ -9,25 +9,28 @@ use App\Services\CartService;
 /**
  * Command Pattern — Concrete Command.
  *
- * Encapsulates adding a product to the cart.
+ * Encapsulates adding a product to the cart, together with the
+ * state required to undo it on a later request (the command is
+ * persisted in session between the add and the undo click).
  */
 class AddToCartCommand implements CartCommand
 {
-    private ?CartItem $addedItem = null;
+    private ?int $affectedItemId = null;
 
     private bool $wasExisting = false;
 
     private int $previousQuantity = 0;
 
     public function __construct(
-        private CartService $cartService,
         private int $productId,
         private int $quantity = 1,
     ) {}
 
     public function execute(): CartItem
     {
-        $cart = $this->cartService->getCart();
+        $service = app(CartService::class);
+        $cart = $service->getCart();
+
         $existing = CartItem::where('cart_id', $cart->id)
             ->where('product_id', $this->productId)
             ->first();
@@ -37,21 +40,28 @@ class AddToCartCommand implements CartCommand
             $this->previousQuantity = $existing->quantity;
         }
 
-        $this->addedItem = $this->cartService->addItem($this->productId, $this->quantity);
+        $item = $service->addItem($this->productId, $this->quantity);
+        $this->affectedItemId = $item->id;
 
-        return $this->addedItem;
+        return $item;
     }
 
     public function undo(): void
     {
-        if (! $this->addedItem) {
+        if (! $this->affectedItemId) {
+            return;
+        }
+
+        $item = CartItem::find($this->affectedItemId);
+
+        if (! $item) {
             return;
         }
 
         if ($this->wasExisting) {
-            $this->addedItem->update(['quantity' => $this->previousQuantity]);
+            $item->update(['quantity' => $this->previousQuantity]);
         } else {
-            $this->addedItem->delete();
+            $item->delete();
         }
     }
 

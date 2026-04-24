@@ -7,8 +7,9 @@ namespace App\Services\Shipping;
  *
  * Declares the factory method createCalculator() that subclasses
  * override to produce different shipping calculators.
- * The getShippingCost() method uses the factory method
- * without knowing which concrete calculator will be created.
+ * The getShippingCost() / getDeliveryEstimate() methods use the
+ * factory method without knowing which concrete calculator will be
+ * created.
  */
 abstract class ShippingMethod
 {
@@ -24,20 +25,24 @@ abstract class ShippingMethod
     /**
      * Uses the factory method to get the calculator and compute cost.
      */
-    public function getShippingCost(float $orderTotal): float
+    public function getShippingCost(ShippingQuote $quote): float
     {
-        $calculator = $this->createCalculator();
-
-        return $calculator->calculate($orderTotal);
+        return $this->createCalculator()->calculate($quote);
     }
 
     /**
      * Uses the factory method to get estimated delivery time.
      */
-    public function getDeliveryEstimate(): string
+    public function getDeliveryEstimate(ShippingQuote $quote): string
     {
-        $calculator = $this->createCalculator();
+        return $this->createCalculator()->getEstimatedDays($quote);
+    }
 
-        return $calculator->getEstimatedDays();
+    /**
+     * Uses the factory method to check eligibility.
+     */
+    public function isEligible(ShippingQuote $quote): bool
+    {
+        return $this->createCalculator()->isEligible($quote);
     }
 }

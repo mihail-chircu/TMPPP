@@ -8,30 +8,39 @@ use App\Services\Cart\CartCommand;
 /**
  * Command Pattern — Concrete Command.
  *
- * Encapsulates updating a cart item's quantity.
- * Stores the previous quantity for undo capability.
+ * Encapsulates updating a cart item's quantity and remembers the
+ * previous quantity so the change can be undone on a later request.
  */
 class UpdateQuantityCommand implements CartCommand
 {
-    private int $previousQuantity;
+    private int $previousQuantity = 0;
 
     public function __construct(
-        private CartItem $cartItem,
+        private int $cartItemId,
         private int $newQuantity,
-    ) {
-        $this->previousQuantity = $cartItem->quantity;
-    }
+    ) {}
 
-    public function execute(): CartItem
+    public function execute(): ?CartItem
     {
-        $this->cartItem->update(['quantity' => $this->newQuantity]);
+        $item = CartItem::find($this->cartItemId);
 
-        return $this->cartItem->fresh();
+        if (! $item) {
+            return null;
+        }
+
+        $this->previousQuantity = $item->quantity;
+        $item->update(['quantity' => $this->newQuantity]);
+
+        return $item->fresh();
     }
 
     public function undo(): void
     {
-        $this->cartItem->update(['quantity' => $this->previousQuantity]);
+        $item = CartItem::find($this->cartItemId);
+
+        if ($item) {
+            $item->update(['quantity' => $this->previousQuantity]);
+        }
     }
 
     public function getDescription(): string

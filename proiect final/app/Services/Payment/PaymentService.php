@@ -10,19 +10,25 @@ use InvalidArgumentException;
 
 /**
  * Resolves the correct payment adapter and processes payment.
+ *
+ * Adapters are injected by Laravel's service container so the
+ * foreign gateway clients (Stripe, Local Bank API) can be mocked
+ * or swapped for tests without touching this service.
  */
 class PaymentService
 {
     /** @var array<string, PaymentProcessorInterface> */
     private array $adapters;
 
-    public function __construct()
-    {
-        // Register available payment adapters
+    public function __construct(
+        CashOnDeliveryAdapter $cashAdapter,
+        BankTransferAdapter $bankAdapter,
+        CardPaymentAdapter $cardAdapter,
+    ) {
         $this->adapters = [
-            'cash_on_delivery' => new CashOnDeliveryAdapter(),
-            'bank_transfer' => new BankTransferAdapter(),
-            'card' => new CardPaymentAdapter(),
+            $cashAdapter->getCode() => $cashAdapter,
+            $bankAdapter->getCode() => $bankAdapter,
+            $cardAdapter->getCode() => $cardAdapter,
         ];
     }
 

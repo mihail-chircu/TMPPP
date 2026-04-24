@@ -9,6 +9,35 @@
 
         <h1 class="section-title mb-8">Coșul de Cumpărături</h1>
 
+        @if (session('success'))
+            <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('info'))
+            <div class="mb-6 rounded-2xl border border-kinder-brown-200 bg-kinder-brown-50 px-4 py-3 text-sm text-kinder-brown-700">
+                {{ session('info') }}
+            </div>
+        @endif
+
+        @if ($canUndo ?? false)
+            <div class="mb-6 flex items-center justify-between rounded-2xl border border-kinder-brown-100 bg-white px-4 py-3">
+                <div class="text-sm text-kinder-brown-700">
+                    <span class="font-semibold">Ultima acțiune:</span>
+                    <span class="text-kinder-brown-500">{{ $history[count($history) - 1] ?? '' }}</span>
+                </div>
+                <form method="POST" action="{{ route('cart.undo') }}">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center gap-1.5 rounded-xl border border-kinder-brown-200 bg-kinder-brown-50 px-3 py-2 text-sm font-semibold text-kinder-brown-700 hover:bg-kinder-brown-100 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h11a5 5 0 015 5v1M3 10l4-4m-4 4l4 4" />
+                        </svg>
+                        Anulează ultima operație
+                    </button>
+                </form>
+            </div>
+        @endif
+
         @if (!$cart || $cart->items->isEmpty())
 
             {{-- Empty Cart --}}

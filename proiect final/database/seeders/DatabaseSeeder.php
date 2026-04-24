@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -50,6 +51,11 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($categories as $cat) {
+            // Attach an image if a matching file is available in public storage.
+            $candidate = 'categories/' . $cat['slug'] . '.jpg';
+            if (Storage::disk('public')->exists($candidate)) {
+                $cat['image'] = $candidate;
+            }
             Category::create($cat);
         }
 
@@ -136,10 +142,21 @@ class DatabaseSeeder extends Seeder
 
             $product = Product::create($productData);
 
-            // Create placeholder image
+            // Attach the best image we can find. Preference order:
+            //   1. category image (if this product's category has one)
+            //   2. parent category image (for subcategory products)
+            //   3. shared placeholder
+            $imagePath = $category->image;
+            if (! $imagePath && $category->parent_id) {
+                $imagePath = Category::find($category->parent_id)?->image;
+            }
+            if (! $imagePath || ! Storage::disk('public')->exists($imagePath)) {
+                $imagePath = 'products/placeholder.jpg';
+            }
+
             ProductImage::create([
                 'product_id' => $product->id,
-                'path' => 'products/placeholder.jpg',
+                'path' => $imagePath,
                 'alt' => $product->name,
                 'is_primary' => true,
                 'sort_order' => 0,

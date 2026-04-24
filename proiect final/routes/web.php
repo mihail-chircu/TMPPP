@@ -17,6 +17,61 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\DiscountController as AdminDiscountController;
 
+// Local-only screenshot helper: auto-login as a given user id so that
+// the documentation capture script can reach admin/profile pages.
+// Only available in local environment; never runs in production.
+Route::get('/__dev/login/{user}', function (\App\Models\User $user) {
+    abort_unless(app()->environment('local'), 404);
+    \Illuminate\Support\Facades\Auth::login($user);
+    return redirect()->intended('/');
+})->name('__dev.login');
+
+// Local-only: seed a sample cart + run one AddToCart command through the
+// invoker so the Undo button has something to undo. Lets the docs capture
+// the Command pattern in action.
+Route::get('/__dev/seed-cart', function (
+    \App\Services\CartService $cartService,
+    \App\Services\Cart\CartCommandInvoker $invoker,
+) {
+    abort_unless(app()->environment('local'), 404);
+
+    $userId = \Illuminate\Support\Facades\Auth::id();
+    $sessionId = session()->getId();
+
+    // Reset any previous demo cart.
+    $resetCart = function (\App\Models\Cart $c): void {
+        $c->items()->delete();
+        $c->delete();
+    };
+    if ($userId) {
+        \App\Models\Cart::where('user_id', $userId)->each($resetCart);
+    }
+    \App\Models\Cart::where('session_id', $sessionId)->each($resetCart);
+
+    $cart = \App\Models\Cart::create([
+        'user_id' => $userId,
+        'session_id' => $userId ? null : $sessionId,
+    ]);
+
+    $products = \App\Models\Product::where('is_active', true)->inRandomOrder()->limit(2)->get();
+    foreach ($products as $product) {
+        \App\Models\CartItem::create([
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'price' => $product->current_price,
+            'quantity' => 1,
+        ]);
+    }
+
+    // Run one tracked command so Undo becomes available.
+    $third = \App\Models\Product::whereNotIn('id', $products->pluck('id'))->inRandomOrder()->first();
+    if ($third) {
+        $invoker->execute(new \App\Services\Cart\Commands\AddToCartCommand($third->id, 1));
+    }
+
+    return redirect()->route('cart.index');
+})->name('__dev.seed_cart');
+
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
@@ -38,6 +93,7 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::post('/add', [CartController::class, 'add'])->name('add');
     Route::patch('/update/{item}', [CartController::class, 'update'])->name('update');
     Route::delete('/remove/{item}', [CartController::class, 'remove'])->name('remove');
+    Route::post('/undo', [CartController::class, 'undo'])->name('undo');
 });
 
 // Auth Required Routes

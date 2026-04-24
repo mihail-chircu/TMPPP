@@ -8,6 +8,9 @@ use App\Services\Shipping\Methods\StandardShipping;
 
 /**
  * Resolves available shipping methods and calculates costs.
+ *
+ * Relies on the Factory Method pattern exposed by ShippingMethod —
+ * each concrete method produces its own ShippingCalculator.
  */
 class ShippingService
 {
@@ -24,36 +27,29 @@ class ShippingService
     }
 
     /**
-     * Get shipping methods available for the given order total.
+     * Get shipping methods available for the given quote.
      */
-    public function getAvailableMethods(float $orderTotal): array
+    public function getAvailableMethods(ShippingQuote $quote): array
     {
         return collect($this->methods)
-            ->filter(function (ShippingMethod $method) use ($orderTotal) {
-                // Free shipping only for orders >= 500 MDL
-                if ($method->getCode() === 'free' && $orderTotal < 500) {
-                    return false;
-                }
-
-                return true;
-            })
+            ->filter(fn (ShippingMethod $method) => $method->isEligible($quote))
             ->map(fn (ShippingMethod $method) => [
                 'code' => $method->getCode(),
                 'name' => $method->getName(),
-                'cost' => $method->getShippingCost($orderTotal),
-                'estimated_days' => $method->getDeliveryEstimate(),
+                'cost' => $method->getShippingCost($quote),
+                'estimated_days' => $method->getDeliveryEstimate($quote),
             ])
             ->values()
             ->all();
     }
 
     /**
-     * Get the shipping cost for a specific method.
+     * Get the shipping cost for a specific method and quote.
      */
-    public function calculateCost(string $methodCode, float $orderTotal): float
+    public function calculateCost(string $methodCode, ShippingQuote $quote): float
     {
         $method = $this->methods[$methodCode] ?? $this->methods['standard'];
 
-        return $method->getShippingCost($orderTotal);
+        return $method->getShippingCost($quote);
     }
 }
