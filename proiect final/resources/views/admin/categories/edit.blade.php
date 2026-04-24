@@ -89,7 +89,7 @@
                     <label for="image" class="mb-1 block text-sm font-medium text-gray-700">Category Image</label>
                     @if($category->image)
                         <div class="mb-3 flex items-center gap-3">
-                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="h-16 w-16 rounded-lg object-cover">
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-16 w-16 rounded-lg object-cover">
                             <span class="text-xs text-gray-500">Current image</span>
                         </div>
                     @endif
