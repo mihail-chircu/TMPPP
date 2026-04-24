@@ -163,7 +163,7 @@
                                         value="{{ request('min_price', $priceRange['min']) }}"
                                         min="{{ $priceRange['min'] }}"
                                         max="{{ $priceRange['max'] }}"
-                                        step="10"
+                                        step="any"
                                         class="input-field rounded-full text-sm py-2.5 px-4"
                                     >
                                 </div>
@@ -175,7 +175,7 @@
                                         value="{{ request('max_price', $priceRange['max']) }}"
                                         min="{{ $priceRange['min'] }}"
                                         max="{{ $priceRange['max'] }}"
-                                        step="10"
+                                        step="any"
                                         class="input-field rounded-full text-sm py-2.5 px-4"
                                     >
                                 </div>
@@ -324,7 +324,7 @@
                                         value="{{ request('min_price', $priceRange['min']) }}"
                                         min="{{ $priceRange['min'] }}"
                                         max="{{ $priceRange['max'] }}"
-                                        step="10"
+                                        step="any"
                                         class="input-field rounded-full text-sm py-2.5 px-4"
                                     >
                                 </div>
@@ -337,7 +337,7 @@
                                         value="{{ request('max_price', $priceRange['max']) }}"
                                         min="{{ $priceRange['min'] }}"
                                         max="{{ $priceRange['max'] }}"
-                                        step="10"
+                                        step="any"
                                         class="input-field rounded-full text-sm py-2.5 px-4"
                                     >
                                 </div>
