@@ -4,7 +4,7 @@ Proiect de an, TMPPP (Tehnici și Metodologii de Programare a Produselor Program
 Autor: **Chircu Mihail**.
 
 Aplicație e-commerce reală pentru un magazin de jucării din Leova, construită pe Laravel 11, care
-ilustrează **16 pattern-uri GoF** într-un context de business plauzibil (catalog, coș, checkout,
+ilustrează **15 pattern-uri GoF** într-un context de business plauzibil (catalog, coș, checkout,
 plăți, livrare, notificări, panou admin).
 
 ## Stack
@@ -31,24 +31,40 @@ Site: `http://127.0.0.1:8000` · admin: `/admin` (credențiale create de seeder)
 
 ## Pattern-uri GoF
 
+15 din 23 pattern-uri GoF — selectate pentru relevanța lor în domeniul magazinului online.
+
+**Creaționale (4)**
+
 | # | Pattern | Locație |
 |---|---|---|
-| 1 | Singleton | [AppServiceProvider](app/Providers/AppServiceProvider.php) — `Cart`, `WishlistService` |
-| 2 | Factory Method | [Shipping\Methods](app/Services/Shipping/Methods) — metode de livrare |
-| 3 | Abstract Factory | [Notifications\Channels](app/Notifications/Channels) — Email / SMS / Push |
-| 4 | Prototype | [Product::clonePrototype](app/Models/Product.php) — duplicare produse |
-| 5 | Builder | [Order\OrderBuilder](app/Services/Order/OrderBuilder.php) |
-| 6 | Adapter | [Payment\Adapters](app/Services/Payment/Adapters) — gateway-uri externe |
-| 7 | Decorator | [Pricing\\*Decorator](app/Services/Pricing) — discount, tax, gift wrap |
-| 8 | Facade | [Checkout\CheckoutFacade](app/Services/Checkout/CheckoutFacade.php) |
+| 1 | Builder | [Order\OrderBuilder](app/Services/Order/OrderBuilder.php) |
+| 2 | Prototype | [Product::clonePrototype](app/Models/Product.php) — duplicare produse |
+| 3 | Factory Method | [Shipping\Methods](app/Services/Shipping/Methods) — metode de livrare |
+| 4 | Abstract Factory | [Notifications\Channels](app/Notifications/Channels) — Email / SMS / Push |
+
+**Structurale (5)**
+
+| # | Pattern | Locație |
+|---|---|---|
+| 5 | Facade | [Checkout\CheckoutFacade](app/Services/Checkout/CheckoutFacade.php) |
+| 6 | Decorator | [Pricing\\*Decorator](app/Services/Pricing) — discount, tax, gift wrap |
+| 7 | Adapter | [Payment\Adapters](app/Services/Payment/Adapters) — gateway-uri externe |
+| 8 | Proxy | [Repositories\CachingProductProxy](app/Repositories/CachingProductProxy.php) |
 | 9 | Composite | [Models\Category](app/Models/Category.php) + [CategoryComponent](app/Contracts/CategoryComponent.php) |
-| 10 | Proxy | [Repositories\CachingProductProxy](app/Repositories/CachingProductProxy.php) |
+
+**Comportamentale (6)**
+
+| # | Pattern | Locație |
+|---|---|---|
+| 10 | Strategy | [Catalog\Strategies](app/Services/Catalog/Strategies) — sortare catalog |
 | 11 | State | [Services\OrderState](app/Services/OrderState) — ciclul de viață al comenzii |
-| 12 | Observer | [Events\OrderPlaced](app/Events/OrderPlaced.php) + [Listeners](app/Listeners) |
-| 13 | Strategy | [Catalog\Strategies](app/Services/Catalog/Strategies) — sortare catalog |
+| 12 | Command | [Cart\Commands](app/Services/Cart/Commands) — `CartCommandInvoker` cu undo |
+| 13 | Chain of Responsibility | [Validation\Handlers](app/Services/Validation/Handlers) — `OrderValidationPipeline` |
 | 14 | Template Method | [Export\OrderExportTemplate](app/Services/Export/OrderExportTemplate.php) — CSV / JSON |
-| 15 | Command | [Cart\Commands](app/Services/Cart/Commands) — `CartCommandInvoker` cu undo |
-| 16 | Chain of Responsibility | [Validation\Handlers](app/Services/Validation/Handlers) — `OrderValidationPipeline` |
+| 15 | Observer | [Events\OrderPlaced](app/Events/OrderPlaced.php) + [Listeners](app/Listeners) |
+
+Restul de 8 (Singleton, Mediator, Flyweight, Memento, Visitor, Interpreter, Bridge, Iterator) au fost
+deliberat omise — domeniul ales nu generează natural nevoia lor (vezi secțiunea de limitări din raport).
 
 Detalii vizuale, cu capturi de ecran pentru fiecare pattern, în [design-patterns-ilustrate.pdf](design-patterns-ilustrate.pdf).
 
