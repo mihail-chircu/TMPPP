@@ -1,66 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Kinder — Magazin online de jucării
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proiect de an, TMPPP (Tehnici și Metodologii de Programare a Produselor Program), UTM, specialitatea TI-235.
+Autor: **Chircu Mihail**.
 
-## About Laravel
+Aplicație e-commerce reală pentru un magazin de jucării din Leova, construită pe Laravel 11, care
+ilustrează **16 pattern-uri GoF** într-un context de business plauzibil (catalog, coș, checkout,
+plăți, livrare, notificări, panou admin).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP ^8.2, Laravel ^11.31
+- SQLite (default) — comutabil pe MySQL din `.env`
+- Blade + Tailwind CSS, Vite pentru build-uri
+- PHPUnit pentru teste
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Quick start
 
-## Learning Laravel
+```bash
+composer install
+npm install && npm run build
+cp .env.example .env
+php artisan key:generate
+touch database/database.sqlite
+php artisan migrate --seed
+php artisan storage:link
+php artisan serve
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Site: `http://127.0.0.1:8000` · admin: `/admin` (credențiale create de seeder).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Pattern-uri GoF
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| # | Pattern | Locație |
+|---|---|---|
+| 1 | Singleton | [AppServiceProvider](app/Providers/AppServiceProvider.php) — `Cart`, `WishlistService` |
+| 2 | Factory Method | [Shipping\Methods](app/Services/Shipping/Methods) — metode de livrare |
+| 3 | Abstract Factory | [Notifications\Channels](app/Notifications/Channels) — Email / SMS / Push |
+| 4 | Prototype | [Product::clonePrototype](app/Models/Product.php) — duplicare produse |
+| 5 | Builder | [Order\OrderBuilder](app/Services/Order/OrderBuilder.php) |
+| 6 | Adapter | [Payment\Adapters](app/Services/Payment/Adapters) — gateway-uri externe |
+| 7 | Decorator | [Pricing\\*Decorator](app/Services/Pricing) — discount, tax, gift wrap |
+| 8 | Facade | [Checkout\CheckoutFacade](app/Services/Checkout/CheckoutFacade.php) |
+| 9 | Composite | [Models\Category](app/Models/Category.php) + [CategoryComponent](app/Contracts/CategoryComponent.php) |
+| 10 | Proxy | [Repositories\CachingProductProxy](app/Repositories/CachingProductProxy.php) |
+| 11 | State | [Services\OrderState](app/Services/OrderState) — ciclul de viață al comenzii |
+| 12 | Observer | [Events\OrderPlaced](app/Events/OrderPlaced.php) + [Listeners](app/Listeners) |
+| 13 | Strategy | [Catalog\Strategies](app/Services/Catalog/Strategies) — sortare catalog |
+| 14 | Template Method | [Export\OrderExportTemplate](app/Services/Export/OrderExportTemplate.php) — CSV / JSON |
+| 15 | Command | [Cart\Commands](app/Services/Cart/Commands) — `CartCommandInvoker` cu undo |
+| 16 | Chain of Responsibility | [Validation\Handlers](app/Services/Validation/Handlers) — `OrderValidationPipeline` |
 
-## Laravel Sponsors
+Detalii vizuale, cu capturi de ecran pentru fiecare pattern, în [design-patterns-ilustrate.pdf](design-patterns-ilustrate.pdf).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Funcționalități
 
-### Premium Partners
+- Catalog cu filtre (categorii ierarhice, preț, brand), sortare strategică, paginație
+- Coș cu Command + undo, wishlist persistent
+- Checkout printr-un Facade unic care orchestrează validare → preț → plată → livrare → comandă → notificări
+- Calcul preț în lanț de decoratoare (discount, taxă, ambalaj cadou)
+- Notificări multi-canal (Email/SMS/Push) prin Abstract Factory
+- Panou admin: produse, categorii, comenzi (cu state machine), discount-uri, utilizatori
+- Import scraper de pe jucarenia.md (`php artisan import:jucarenia`)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Comenzi utile
 
-## Contributing
+```bash
+php artisan test                 # PHPUnit
+php artisan migrate:fresh --seed # reset DB cu date demo
+php artisan import:jucarenia     # populează catalog din jucarenia.md (necesită internet)
+npm run dev                      # Vite în watch
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Livrabile proiect de an
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [Raport](Chircu_Mihail_TI-235_Raport_proiect_de_an.pdf) ·
+  [.docx](Chircu_Mihail_TI-235_Raport_proiect_de_an.docx)
+- [Prezentare](Chircu_Mihail_TI-235_Prezentare_proiect_de_an.pdf) ·
+  [.pptx](Chircu_Mihail_TI-235_Prezentare_proiect_de_an.pptx)
+- [PDF ilustrativ pattern-uri](../design-patterns-ilustrate.pdf)
